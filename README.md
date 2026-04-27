@@ -1,17 +1,80 @@
-# React + Vite
+# Student Scoreboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based web application for managing and visualizing student scores using a component-based architecture.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This project is built as part of a Web Development assignment. It demonstrates core React concepts such as functional components, state management using hooks, props, conditional rendering, and dynamic UI updates.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Display a list of students with their scores
+- Add new students using a form
+- Update student scores dynamically
+- Automatic pass/fail status based on score
+- Summary statistics:
+  - Total students
+  - Number of students passed
+  - Average score
+- Clean and responsive UI using pure CSS
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# students-scoreboard
+- React (with Vite)
+- JavaScript (ES6+)
+- CSS (no frameworks)
+
+## Project Structure
+src/
+├── App.jsx
+├── App.css
+├── main.jsx
+├── components/
+│ ├── Header.jsx
+│ ├── StudentTable.jsx
+│ ├── StudentRow.jsx
+│ ├── AddStudentForm.jsx
+
+## Installation and Setup
+
+1. Clone the reposnitory:
+   https://github.com/yashverma886622-dot/student-scoreboard.git
+
+2. Navigate to the project director:
+   cd student-scoreboard
+
+3. Install dependencies:
+   npm install
+
+4. Run the development server:
+   npm run dev
+
+5. Open in browser:
+   http://localhost:5173
+   
+## Build for Production
+npm run build
+
+## Live Demo
+
+https://wondrous-smakager-882003.netlify.app/
+
+## Functional Highlights
+
+- State is managed in the parent component (App.jsx)
+- Data is passed to child components via props
+- Reusable components improve maintainability
+- Conditional rendering is used for pass/fail status
+- Form handling includes controlled components
+
+## Future Improvements
+
+- Input validation for score range (0–100)
+- Edit student name functionality
+- Delete student feature
+- Persistent storage using localStorage or database
+- Responsive design improvements
+
+## License
+
+This project is created for academic purposes.
