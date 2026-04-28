@@ -6,8 +6,6 @@ function AddStudentForm({ addStudent }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !score) return;
-
     addStudent(name, score);
     setName("");
     setScore("");

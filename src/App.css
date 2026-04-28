@@ -5,90 +5,75 @@ body {
   color: #00f5d4;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-image:
-    linear-gradient(#0f2a33 1px, transparent 1px),
-    linear-gradient(90deg, #0f2a33 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.25;
-  z-index: -1;
-}
-
 .container {
-  width: 75%;
+  width: 90%;
+  max-width: 1200px;
   margin: auto;
-  padding: 30px;
+  padding: 20px;
 }
 
 .title {
-  font-size: 70px;
-  font-weight: 900;
+  font-size: 60px;
+  font-weight: bold;
 }
 
 .title span {
-  background: linear-gradient(90deg, #00f5d4, #00bbf9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #00f5d4;
 }
 
 .line {
   height: 2px;
   background: #00f5d4;
-  margin: 15px 0 30px;
-  box-shadow: 0 0 10px #00f5d4;
+  margin-bottom: 20px;
+}
+
+.search {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: transparent;
+  border: 1px solid #00f5d4;
+  color: white;
 }
 
 .form {
   display: flex;
   gap: 10px;
-  border: 1px solid #0f2a33;
-  padding: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .form input {
   flex: 1;
-  padding: 12px;
+  padding: 10px;
   background: transparent;
-  border: 1px solid #0f2a33;
+  border: 1px solid #00f5d4;
   color: white;
 }
 
 .form button {
-  padding: 12px 20px;
-  background: transparent;
+  padding: 10px;
   border: 1px solid #00f5d4;
+  background: transparent;
   color: #00f5d4;
 }
 
 .stats {
   display: flex;
-  margin-bottom: 30px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .stats div {
   flex: 1;
-  border: 1px solid #0f2a33;
+  border: 1px solid #00f5d4;
   padding: 20px;
-}
-
-.stats h2 {
-  color: #00f5d4;
+  text-align: center;
 }
 
 .table-container {
-  border: 1px solid #0f2a33;
+  border: 1px solid #00f5d4;
   padding: 20px;
-}
-
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  overflow-x: auto;
 }
 
 table {
@@ -96,64 +81,35 @@ table {
   border-collapse: collapse;
 }
 
-th {
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #00f5d4;
+}
+
+/* FIX ALIGNMENT */
+.name {
   text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #0f2a33;
+  padding-left: 20px;
 }
 
-td {
-  padding: 15px;
-  border-bottom: 1px solid #0f2a33;
-}
-
-.row {
-  position: relative;
-}
-
-.row::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 10%;
-  height: 80%;
-  width: 3px;
-  background: #00f5d4;
-  box-shadow: 0 0 10px #00f5d4;
+.update {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
 }
 
 .score {
-  color: #ffd60a;
-  font-weight: bold;
-}
-
-.badge {
-  padding: 5px 12px;
-  border: 1px solid;
-  font-size: 12px;
+  color: yellow;
 }
 
 .pass {
-  color: #00ff88;
-  border-color: #00ff88;
+  color: green;
 }
 
 .fail {
-  color: #ff4d6d;
-  border-color: #ff4d6d;
+  color: red;
 }
 
-td input {
-  background: transparent;
-  border: 1px solid #0f2a33;
-  padding: 5px;
-  color: white;
-}
-
-td button {
-  margin-left: 10px;
-  border: 1px solid #00f5d4;
-  background: transparent;
-  color: #00f5d4;
-  padding: 5px 10px;
+.topper {
+  background: rgba(0,255,200,0.1);
 }
