@@ -57,7 +57,7 @@ npm run build
 
 ## Live Demo
 
-https://wondrous-smakager-882003.netlify.app/
+(https://radiant-licorice-5ae2f8.netlify.app/)
 
 ## Functional Highlights
 
