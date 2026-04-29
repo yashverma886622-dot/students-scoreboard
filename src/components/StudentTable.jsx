@@ -1,10 +1,10 @@
 import StudentRow from "./StudentRow";
 
-function StudentTable({ students, updateScore, deleteStudent, maxScore }) {
+function StudentTable({ students, updateScore, deleteStudent }) {
   return (
-    <div className="table-container">
+    <section className="student-table">
       <div className="table-header">
-        <h3>STUDENT RECORDS</h3>
+        <h2>Student Scores</h2>
         <span>{students.length} entries</span>
       </div>
 
@@ -18,20 +18,18 @@ function StudentTable({ students, updateScore, deleteStudent, maxScore }) {
             <th>ACTION</th>
           </tr>
         </thead>
-
         <tbody>
-          {students.map((s) => (
+          {students.map((student) => (
             <StudentRow
-              key={s.id}
-              student={s}
+              key={student.id}
+              student={student}
               updateScore={updateScore}
               deleteStudent={deleteStudent}
-              maxScore={maxScore}
             />
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 }
 

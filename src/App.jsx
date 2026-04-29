@@ -1,88 +1,131 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Header from "./components/Header";
 import StudentTable from "./components/StudentTable";
 import AddStudentForm from "./components/AddStudentForm";
 import "./App.css";
+
+const STORAGE_KEY = "students";
+const DEFAULT_STUDENTS = [
+  { id: 1, name: "Aman", score: 78 },
+  { id: 2, name: "Riya", score: 45 },
+  { id: 3, name: "Karan", score: 90 },
+  { id: 4, name: "Neha", score: 32 },
+];
 
 function App() {
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("students"));
-    if (saved) setStudents(saved);
-    else {
-      setStudents([
-        { id: 1, name: "Aman", score: 78 },
-        { id: 2, name: "Riya", score: 45 },
-        { id: 3, name: "Karan", score: 90 },
-        { id: 4, name: "Neha", score: 32 },
-      ]);
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setStudents(parsed);
+          return;
+        }
+      } catch (error) {
+        console.warn("Unable to load students from localStorage:", error);
+      }
     }
+
+    setStudents(DEFAULT_STUDENTS);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("students", JSON.stringify(students));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
   }, [students]);
 
   const addStudent = (name, score) => {
-    if (!name.trim() || score === "") return;
+    const trimmedName = name.trim();
+    const parsedScore = Number(score);
 
-    setStudents([
-      ...students,
-      { id: Date.now(), name, score: Number(score) },
+    if (!trimmedName || Number.isNaN(parsedScore)) return;
+
+    setStudents((currentStudents) => [
+      ...currentStudents,
+      {
+        id: Date.now(),
+        name: trimmedName,
+        score: parsedScore,
+      },
     ]);
   };
 
-  const updateScore = (id, newScore) => {
-    setStudents(
-      students.map((s) =>
-        s.id === id ? { ...s, score: Number(newScore) } : s
+  const updateScore = (id, value) => {
+    const parsedScore = Number(value);
+    if (Number.isNaN(parsedScore)) return;
+
+    setStudents((currentStudents) =>
+      currentStudents.map((student) =>
+        student.id === id ? { ...student, score: parsedScore } : student
       )
     );
   };
 
   const deleteStudent = (id) => {
-    setStudents(students.filter((s) => s.id !== id));
+    setStudents((currentStudents) =>
+      currentStudents.filter((student) => student.id !== id)
+    );
   };
 
-  const filteredStudents = students.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
+  const filteredStudents = useMemo(
+    () =>
+      students.filter((student) =>
+        student.name.toLowerCase().includes(search.trim().toLowerCase())
+      ),
+    [students, search]
   );
 
-  const total = students.length;
-  const passed = students.filter((s) => s.score >= 40).length;
-  const avg =
-    students.length > 0
-      ? students.reduce((acc, s) => acc + s.score, 0) / students.length
-      : 0;
+  const stats = useMemo(() => {
+    const total = students.length;
+    const passed = students.filter((student) => student.score >= 40).length;
+    const average =
+      total > 0
+        ? students.reduce((sum, student) => sum + student.score, 0) / total
+        : 0;
 
-  const maxScore =
-    students.length > 0 ? Math.max(...students.map((s) => s.score)) : 0;
+    return {
+      total,
+      passed,
+      average: Math.round(average),
+    };
+  }, [students]);
 
   return (
     <div className="container">
       <Header />
 
-      <input
-        className="search"
-        placeholder="Search student..."
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div className="search-bar">
+        <input
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder="Search students by name"
+        />
+      </div>
 
       <AddStudentForm addStudent={addStudent} />
 
       <div className="stats">
-        <div><p>TOTAL</p><h2>{total}</h2></div>
-        <div><p>PASSED</p><h2>{passed}</h2></div>
-        <div><p>AVG SCORE</p><h2>{Math.round(avg)}</h2></div>
+        <div className="stat-card">
+          <span>Total Students</span>
+          <strong>{stats.total}</strong>
+        </div>
+        <div className="stat-card">
+          <span>Passed Students</span>
+          <strong>{stats.passed}</strong>
+        </div>
+        <div className="stat-card">
+          <span>Average Score</span>
+          <strong>{stats.average}</strong>
+        </div>
       </div>
 
       <StudentTable
         students={filteredStudents}
         updateScore={updateScore}
         deleteStudent={deleteStudent}
-        maxScore={maxScore}
       />
     </div>
   );

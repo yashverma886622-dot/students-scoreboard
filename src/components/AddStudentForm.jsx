@@ -4,9 +4,26 @@ function AddStudentForm({ addStudent }) {
   const [name, setName] = useState("");
   const [score, setScore] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addStudent(name, score);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const trimmedName = name.trim();
+    const numericScore = Number(score);
+
+    if (!trimmedName) {
+      return;
+    }
+
+    if (
+      score === "" ||
+      Number.isNaN(numericScore) ||
+      numericScore < 0 ||
+      numericScore > 100
+    ) {
+      return;
+    }
+
+    addStudent(trimmedName, numericScore);
     setName("");
     setScore("");
   };
@@ -14,14 +31,18 @@ function AddStudentForm({ addStudent }) {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <input
+        type="text"
         placeholder="Student name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(event) => setName(event.target.value)}
       />
       <input
+        type="number"
         placeholder="Score (0-100)"
+        min="0"
+        max="100"
         value={score}
-        onChange={(e) => setScore(e.target.value)}
+        onChange={(event) => setScore(event.target.value)}
       />
       <button type="submit">+ ADD</button>
     </form>
